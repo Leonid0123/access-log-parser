@@ -22,6 +22,18 @@ public class Main {
             count++;
             System.out.println("Это файл номер " + count);
         }
-
+        //Задание по теме ""Синтаксис языка" и “Базовые типы данных”"
+//        System.out.println("Введите первое число: ");
+//        int firstNumber = new Scanner(System.in).nextInt();
+//        System.out.println("Введите второе число: ");
+//        int secondNumber = new Scanner(System.in).nextInt();
+//        int sum = firstNumber + secondNumber;
+//        int diff = firstNumber - secondNumber;
+//        int product = firstNumber * secondNumber;
+//        double quotient = (double) firstNumber / secondNumber;
+//        System.out.println("Сумма: " + sum);
+//        System.out.println("Разность: " + diff);
+//        System.out.println("Произведение: " + product);
+//        System.out.println("Частное: " + quotient);
     }
 }
