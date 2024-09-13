@@ -27,16 +27,16 @@ public class Main {
             try {
                 FileReader fileReader = new FileReader(pathFile);
                 BufferedReader reader = new BufferedReader(fileReader);
-                String logPattern =
-                        "(\\d+\\.\\d+\\.\\d+\\.\\d+)" + // IP-адрес
-                                " (\\S*) (\\S*) " + // Два пропущенных свойства
-                                "\\[(.+?)\\] " + // Дата и время запроса
-                                "\"(\\w+ .+? HTTP/\\d\\.\\d\") " + // Метод и путь запроса
-                                "(\\d{3}) " + // Код HTTP-ответа
-                                "(\\d+) " + // Размер отданных данных
-                                "\"([^\"]*)\" " + // Referer
-                                "\"([^\"]*)\""; // User-Agent
-                Pattern pattern = Pattern.compile(logPattern);
+//                String logPattern =
+//                        "(\\d+\\.\\d+\\.\\d+\\.\\d+)" + // IP-адрес
+//                                " (\\S*) (\\S*) " + // Два пропущенных свойства
+//                                "\\[(.+?)\\] " + // Дата и время запроса
+//                                "\"(\\w+) (.+? HTTP/\\d\\.\\d\") " + // Метод и путь запроса
+//                                "(\\d{3}) " + // Код HTTP-ответа
+//                                "(\\d+) " + // Размер отданных данных
+//                                "\"([^\"]*)\" " + // Referer
+//                                "\"([^\"]*)\""; // User-Agent
+//                Pattern pattern = Pattern.compile(logPattern);
                 String line;
                 int countLines = 0;
                 int countGoogle = 0;
@@ -47,17 +47,18 @@ public class Main {
                     if (length > 1024) {
                         throw new LengthExceededException("В файле строка №" + countLines + " длиной более 1024 символов!");
                     }
-                    Matcher matcher = pattern.matcher(line);
-                    if (matcher.find()) {
-                        String ip = matcher.group(1);
-                        String prop1 = matcher.group(2);
-                        String prop2 = matcher.group(3);
-                        String dateTime = matcher.group(4);
-                        String path = matcher.group(5);
-                        String httpCode = matcher.group(6);
-                        String dataSize = matcher.group(7);
-                        String referer = matcher.group(8);
-                        String userAgent = matcher.group(9); //В приложении выделяется фрагмент User-Agent
+//                    Matcher matcher = pattern.matcher(line);
+//                    if (matcher.find()) {
+//                        String ip = matcher.group(1);
+//                        String prop1 = matcher.group(2);
+//                        String prop2 = matcher.group(3);
+//                        String dateTime = matcher.group(4);
+//                        String method = matcher.group(5);
+//                        String path = matcher.group(6);
+//                        String httpCode = matcher.group(7);
+//                        String dataSize = matcher.group(8);
+//                        String referer = matcher.group(9);
+//                        String userAgent = matcher.group(10); //В приложении выделяется фрагмент User-Agent
 
                         //userAgent
                         String googleBotPattern = ".Googlebot.";
