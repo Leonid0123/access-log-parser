@@ -13,20 +13,19 @@ public class UserAgent {
         else
             this.typeOS = "Unknown OS";
         //parseBrowser
-        if (userAgent.contains("Edg")) {
+        if (userAgent.contains("Edg"))
             this.browser = "Edge";//+
-        } else if (userAgent.contains("Firefox")) {
+        else if (userAgent.contains("Firefox"))
             this.browser = "Firefox";//+
-        } else if (userAgent.contains("Chrome") && userAgent.contains("Safari") && userAgent.contains("KHTML")
-                && userAgent.contains("like Gecko") && !userAgent.contains("Edge") && !userAgent.contains("OPR")) {
+        else if (userAgent.contains("Chrome") && userAgent.contains("Safari") && userAgent.contains("KHTML")
+                && userAgent.contains("like Gecko") && !userAgent.contains("Edge") && !userAgent.contains("OPR"))
             this.browser = "Chrome";//+
-        } else if (userAgent.contains("Opera") || userAgent.contains("OPR")) {
+        else if (userAgent.contains("Opera") || userAgent.contains("OPR"))
             this.browser = "Opera";//+
-        } else if (userAgent.contains("Safari") && !userAgent.contains("Chrome") && userAgent.contains("Mobile")) {
+        else if (userAgent.contains("Safari") && !userAgent.contains("Chrome") && userAgent.contains("Mobile"))
             this.browser = "Safari";//+
-        } else {
+        else
             this.browser = "Other";
-        }
     }
 
     public String getTypeOS() {

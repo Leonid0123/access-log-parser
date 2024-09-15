@@ -11,7 +11,7 @@ public class LogEntry {
     private final String httpCode;
     private final String dataSize;
     private final String referer;
-    private final String userAgent;
+    private final UserAgent userAgent;
 
     public LogEntry(String line) {
         String logPattern =
@@ -35,7 +35,7 @@ public class LogEntry {
             this.httpCode = matcher.group(7);
             this.dataSize = matcher.group(8);
             this.referer = matcher.group(9);
-            this.userAgent = matcher.group(10);
+            this.userAgent = new UserAgent(matcher.group(10));
         } else
             throw new RuntimeException("Не найдено совпадений в строке: " + line);
     }
@@ -76,7 +76,7 @@ public class LogEntry {
         return referer;
     }
 
-    public String getUserAgent() {
+    public UserAgent getUserAgent() {
         return userAgent;
     }
 }
