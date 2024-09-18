@@ -1,8 +1,10 @@
 public class UserAgent {
+    private final String line;
     private final String typeOS;
     private final String browser;
 
     public UserAgent(String userAgent) {
+        line = userAgent;
         //parseOS
         if (userAgent.contains("Windows NT"))
             this.typeOS = "Windows";
@@ -14,18 +16,22 @@ public class UserAgent {
             this.typeOS = "Unknown OS";
         //parseBrowser
         if (userAgent.contains("Edg"))
-            this.browser = "Edge";//+
+            this.browser = "Edge";
         else if (userAgent.contains("Firefox"))
-            this.browser = "Firefox";//+
+            this.browser = "Firefox";
         else if (userAgent.contains("Chrome") && userAgent.contains("Safari") && userAgent.contains("KHTML")
                 && userAgent.contains("like Gecko") && !userAgent.contains("Edge") && !userAgent.contains("OPR"))
-            this.browser = "Chrome";//+
+            this.browser = "Chrome";
         else if (userAgent.contains("Opera") || userAgent.contains("OPR"))
-            this.browser = "Opera";//+
+            this.browser = "Opera";
         else if (userAgent.contains("Safari") && !userAgent.contains("Chrome") && userAgent.contains("Mobile"))
-            this.browser = "Safari";//+
+            this.browser = "Safari";
         else
             this.browser = "Other";
+    }
+
+    public String getLine() {
+        return line;
     }
 
     public String getTypeOS() {
