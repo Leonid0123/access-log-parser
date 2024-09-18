@@ -52,16 +52,18 @@ public class Main {
                     if (yandexMatcher.find())
                         countYandex++; //подсчет количества запросов от YandexBot
                 }
-                System.out.println("Общее количество строк в файле: " + countLines);
+                System.out.println("Общее количество строк в файле: " + statistics.getTotalEntries());
                 System.out.println("Количество строк с Googlebot: " + countGoogle);
                 System.out.println("Количество строк с YandexBot: " + countYandex);
-                if (countLines != 0) {
-                    System.out.println("Доля запросов от GoogleBot: " + (double) countGoogle / (double) countLines);
-                    System.out.println("Доля запросов от YandexBot: " + (double) countYandex / (double) countLines);
+                if (statistics.getTotalEntries() != 0) {
+                    System.out.println("Доля запросов от GoogleBot: " + (double) countGoogle / (double) statistics.getTotalEntries());
+                    System.out.println("Доля запросов от YandexBot: " + (double) countYandex / (double) statistics.getTotalEntries());
                 } else throw new IllegalArgumentException("Значение элемента countLines = 0, деление на 0 невозможно!");
                 reader.close();
                 fileReader.close();
                 System.out.println("Средний объем трафика сайта за час: " + statistics.getTrafficRate() + " bytes");
+                System.out.println("Все существующие страницы: " + statistics.getPages());
+                System.out.println("Статистика операционных систем пользователей сайта: " + statistics.getOsStatistics());
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
                 System.out.println("Файл не найден, ошибка: " + ex.getMessage());
