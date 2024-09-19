@@ -64,6 +64,8 @@ public class Main {
                 System.out.println("Средний объем трафика сайта за час: " + statistics.getTrafficRate() + " bytes");
                 System.out.println("Все существующие страницы: " + statistics.getPages());
                 System.out.println("Статистика операционных систем пользователей сайта: " + statistics.getOsStatistics());
+                System.out.println("Все несуществующие сайты: " + statistics.getNotFoundPages());
+                System.out.println("Статистика используемых браузеров: " + statistics.getBrowserStatistics());
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
                 System.out.println("Файл не найден, ошибка: " + ex.getMessage());
