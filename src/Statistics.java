@@ -1,3 +1,5 @@
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -21,6 +23,9 @@ public class Statistics {
     private final HashSet<String> notFoundPages = new HashSet<>();
     private final HashMap<String, Integer> allBrowser = new HashMap<>();
     private final HashSet<String> uniqueUsers = new HashSet<>();
+    private final HashMap<String, Integer> visitsPerSecond = new HashMap<>();
+    private final HashSet<String> domains = new HashSet<>();
+    private final HashMap<String, Integer> uniqueUserVisits = new HashMap<>();
 
     public Statistics() {
         totalTraffic = 0;
@@ -58,7 +63,27 @@ public class Statistics {
         totalEntries++;
         if (!log.getUserAgent().isBot()) {
             totalNotBotEntries++;
-            uniqueUsers.add(log.getIp());
+            String userIP = log.getIp();
+            uniqueUsers.add(userIP);
+            if (uniqueUserVisits.containsKey(userIP)) {
+                int temp = uniqueUserVisits.get(userIP);
+                uniqueUserVisits.put(userIP, temp + 1);
+            } else uniqueUserVisits.put(userIP, 1);
+            String dataTime = log.getDateTime();
+            if (visitsPerSecond.containsKey(dataTime)) {
+                int temp = visitsPerSecond.get(dataTime);
+                visitsPerSecond.put(dataTime, temp + 1);
+            } else visitsPerSecond.put(dataTime, 1);
+        }
+        if (!log.getReferer().equals("-")) {
+            try {
+                URI uri = new URI(log.getReferer());
+                String host = uri.getHost();
+                if (host != null)
+                    domains.add(host.startsWith("www.") ? host.substring(4) : host);
+            } catch (URISyntaxException e) {
+                System.out.println("Invalid URL: " + log.getReferer());
+            }
         }
     }
 
@@ -100,6 +125,20 @@ public class Statistics {
         return (double) totalNotBotEntries / uniqueUsers.size();
     }
 
+    public int calculatePeakVisitsPerSecond() {
+        return visitsPerSecond.values()
+                .stream()
+                .max((i1, i2) -> i1.compareTo(i2))
+                .orElse(0);
+    }
+
+    public int calculateMaxUserVisits() {
+        return uniqueUserVisits.values()
+                .stream()
+                .max((i1, i2) -> i1.compareTo(i2))
+                .orElse(0);
+    }
+
     public double getDurationTimeInHour() {
         return (double) Duration.between(minTime, maxTime).toMinutes() / 60;
     }
@@ -118,5 +157,9 @@ public class Statistics {
 
     public HashSet<String> getNotFoundPages() {
         return notFoundPages;
+    }
+
+    public HashSet<String> getDomains() {
+        return domains;
     }
 }

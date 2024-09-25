@@ -69,6 +69,9 @@ public class Main {
                 System.out.println("Среднее количество посещений сайта за час (без учета ботов): " + statistics.computeAverageVisitsPerHour());
                 System.out.println("Среднее количество ошибочных запросов в час: " + statistics.computeAverageErrorsPerHour());
                 System.out.println("Средняя посещаемость одним пользователем: " + statistics.computeAverageOneUserVisitsPerHour());
+                System.out.println("Пиковая посещаемость сайта (в секунду): " + statistics.calculatePeakVisitsPerSecond());
+                System.out.println("Список сайтов, со страниц которых есть ссылки на текущий сайт: " + statistics.getDomains());
+                System.out.println("Расчет максимальной посещаемости одним пользователем: " + statistics.calculateMaxUserVisits());
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
                 System.out.println("Файл не найден, ошибка: " + ex.getMessage());
