@@ -16,8 +16,11 @@ public class Statistics {
     private final HashSet<String> pages = new HashSet<>();
     private final HashMap<String, Integer> allOS = new HashMap<>();
     private int totalEntries = 0;
+    private int totalNotBotEntries = 0;
+    private int totalFailedResponses = 0;
     private final HashSet<String> notFoundPages = new HashSet<>();
     private final HashMap<String, Integer> allBrowser = new HashMap<>();
+    private final HashSet<String> uniqueUsers = new HashSet<>();
 
     public Statistics() {
         totalTraffic = 0;
@@ -38,6 +41,8 @@ public class Statistics {
         if (log.getHttpCode().equals("200")) {
             pages.add(log.getIp());
         }
+        if ((log.getHttpCode().charAt(0) == '4') || (log.getHttpCode().charAt(0) == '5'))
+            totalFailedResponses++;
         String os = log.getUserAgent().getTypeOS();
         if (allOS.containsKey(os)) {
             int temp = allOS.get(os);
@@ -51,11 +56,14 @@ public class Statistics {
             allBrowser.put(browser, temp + 1);
         } else allBrowser.put(browser, 1);
         totalEntries++;
+        if (!log.getUserAgent().isBot()) {
+            totalNotBotEntries++;
+            uniqueUsers.add(log.getIp());
+        }
     }
 
     public int getTrafficRate() {
-        double difTime = (double) Duration.between(minTime, maxTime).toMinutes() / 60;
-        return (int) Math.round(totalTraffic / difTime);
+        return (int) Math.round(totalTraffic / getDurationTimeInHour());
     }
 
     public HashMap<String, Double> getOsStatistics() {
@@ -78,6 +86,22 @@ public class Statistics {
             res.put(browser, ratio);
         }
         return res;
+    }
+
+    public double computeAverageVisitsPerHour() { //Метод подсчёта среднего количества посещений сайта за час
+        return totalNotBotEntries / getDurationTimeInHour();
+    }
+
+    public double computeAverageErrorsPerHour() { //Метод подсчёта среднего количества ошибочных запросов в час
+        return totalFailedResponses / getDurationTimeInHour();
+    }
+
+    public double computeAverageOneUserVisitsPerHour() {
+        return (double) totalNotBotEntries / uniqueUsers.size();
+    }
+
+    public double getDurationTimeInHour() {
+        return (double) Duration.between(minTime, maxTime).toMinutes() / 60;
     }
 
     public HashSet<String> getPages() {
